@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1cee2e54.css",
+    "main.js": "/static/js/main.59c525ea.js",
+    "static/js/885.8f448bc6.chunk.js": "/static/js/885.8f448bc6.chunk.js",
+    "static/js/787.8bc11ae4.chunk.js": "/static/js/787.8bc11ae4.chunk.js",
+    "static/media/card.png": "/static/media/card.45f6ec1075c700418364.png",
+    "static/media/login-images.png": "/static/media/login-images.3798cb35f4ea8e076964.png",
+    "static/media/primeicons.svg": "/static/media/primeicons.e1441b135b3ca9ad643c.svg",
+    "static/media/credit-card.png": "/static/media/credit-card.7d16623b4646956d496c.png",
+    "static/media/profile.png": "/static/media/profile.c927c10378508b1195e6.png",
+    "static/media/primeicons.eot": "/static/media/primeicons.d44157bdfa026dc877af.eot",
+    "static/media/primeicons.woff": "/static/media/primeicons.10d3152104f2208ac82a.woff",
+    "static/media/primeicons.ttf": "/static/media/primeicons.ea5358601d0a3fd6670b.ttf",
+    "static/media/primeicons.woff2": "/static/media/primeicons.78172950b335ccdb94e2.woff2",
+    "static/media/ImagesProfileIcon.svg": "/static/media/ImagesProfileIcon.b14753ff6cdd1fc75b36c52e18524175.svg",
+    "static/media/verified.svg": "/static/media/verified.1ab87541dce349019a5f979ccb9d4711.svg",
+    "static/media/logout.svg": "/static/media/logout.5fbf3279dcc41cda06047bb9252d66a0.svg",
+    "static/media/newaddCard.svg": "/static/media/newaddCard.d58c743e03324c4aefa1ba801147da3a.svg",
+    "static/media/verfication.svg": "/static/media/verfication.3aa9b00277c93b1371665000ec11f313.svg",
+    "static/media/notification.svg": "/static/media/notification.20c73b9b40e6758bdb5a1e0b55fec33b.svg",
+    "static/media/help.svg": "/static/media/help.56565f88fd18f4bb383adf56163514ec.svg",
+    "index.html": "/index.html",
+    "static/media/search.svg": "/static/media/search.5e8117acdb12ed7eebf2db552d6bc402.svg",
+    "static/media/Previewimage.svg": "/static/media/Previewimage.78dea6eec00498692ffb16af1b5a2079.svg",
+    "static/media/backArrow.svg": "/static/media/backArrow.f6155aded2af3b3d89de276774914521.svg",
+    "main.1cee2e54.css.map": "/static/css/main.1cee2e54.css.map",
+    "main.59c525ea.js.map": "/static/js/main.59c525ea.js.map",
+    "885.8f448bc6.chunk.js.map": "/static/js/885.8f448bc6.chunk.js.map",
+    "787.8bc11ae4.chunk.js.map": "/static/js/787.8bc11ae4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1cee2e54.css",
+    "static/js/main.59c525ea.js"
+  ]
+}

@@ -1,0 +1,265 @@
+@import url("https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap");
+@tailwind base;
+@tailwind components;
+
+:root {
+  --dash1: #1d7c4d;
+  --dash2: #8fb50b;
+  --dash3: #077597;
+  --dash4: #d2e19e;
+  --dash5: #8fb50b;
+}
+
+/* Custom CSS Start  */
+body {
+  @apply font-primary  bg-brightGray;
+}
+
+/* ANim */
+.anim {
+  @apply transition-all duration-300;
+}
+
+/* Titles */
+h1,
+.h1 {
+  @apply font-bold text-3xl xl:text-5xl;
+}
+h2,
+.h2 {
+  @apply font-bold text-2xl 2xl:text-4xl;
+}
+h3,
+.h3 {
+  @apply font-bold text-base sm:text-2xl xl:text-3xl;
+}
+h5,
+.h5 {
+  @apply font-bold text-lg xl:text-xl;
+}
+
+/* Paragraphs */
+p {
+  @apply font-semibold md:font-bold text-xs md:text-base lg:text-lg;
+}
+p.exsmall {
+  @apply text-[13px] leading-5 font-medium;
+}
+
+/* Custom Css */
+.input-titel {
+  @apply block text-sm text-yankeesBlue font-bold pb-1;
+}
+.input_box {
+  @apply flex items-center w-full bg-transparent p-3.5 py-[13px] outline-none border border-azureishWhite rounded-xl;
+}
+.input-title2 {
+  @apply block text-sm sm:text-lg text-yankeesBlue font-normal pb-1;
+}
+.input_box2 {
+  @apply flex items-center w-full text-yankeesBlue font-normal text-sm sm:text-xl bg-lightWhite px-4 xl:px-5 py-3 xl:py-4 outline-none border-[2px] border-azureishWhite rounded-xl;
+}
+.btn-gray {
+  @apply bg-white text-yankeesBlue border-[#94A3B8] border hover:bg-[#78970D] hover:text-white hover:border-[#78970D] px-2 md:px-6 py-2 md:py-3 text-xs md:text-sm font-bold transition-all duration-300 rounded-[10px];
+}
+.btn-red {
+  @apply bg-white text-yankeesBlue border-[#FF616D] border px-2 md:px-6 py-2 md:py-3 text-xs md:text-sm font-bold transition-all duration-300 rounded-[10px];
+}
+.btn-primary {
+  @apply bg-lightGreen text-yankeesBlue border-lightGreen border hover:bg-[#78970D] hover:text-white hover:border-[#78970D] px-5 md:px-6 py-2 md:py-3 text-xs md:text-sm font-bold transition-all duration-300 rounded-[10px];
+}
+.btn-secondary {
+  @apply bg-darkGreen text-white border-lightGreen border hover:bg-[#78970D] hover:border-[#78970D] px-2 md:px-6 py-3 md:py-3 text-xs md:text-sm font-bold transition-all duration-300 rounded-[10px];
+}
+.btn-disable {
+  @apply bg-gray-400 text-white border-lightGreen border hover:bg-[#78970D] hover:border-[#78970D] px-2 md:px-6 py-3 md:py-3 text-xs md:text-sm font-bold transition-all duration-300 rounded-[10px];
+}
+
+/* checkbox right */
+.checkbox {
+  @apply relative flex justify-center items-center;
+}
+.checkbox input {
+  @apply appearance-none w-5 h-5 border bg-white border-gray-300 rounded-md cursor-pointer;
+}
+.checkbox i {
+  @apply absolute scale-0 origin-center;
+}
+input:checked {
+  @apply bg-lightGreen duration-200;
+}
+input:checked + i {
+  @apply scale-100 duration-300;
+}
+
+/* scroll  */
+::-webkit-scrollbar {
+  background-color: #eee;
+  width: 0.2rem !important;
+  height: 0.2rem !important;
+}
+::-webkit-scrollbar-thumb {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(203 213 225 / var(--tw-bg-opacity)) !important;
+}
+::-webkit-scrollbar-track {
+  --tw-bg-opacity: 1 !important;
+  background-color: transparent !important;
+}
+
+.rightInContent::-webkit-scrollbar {
+  background-color: transparent;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Wrapper */
+.wrapper {
+  @apply mx-auto px-3.5 md:px-5 xl:px-10 2xl:px-16;
+}
+
+/* Left Nav Bar */
+.leftPanel {
+  @apply h-screen overflow-y-auto overflow-x-hidden;
+}
+
+.leftPanel .SideNav .SideLink.active {
+  @apply bg-darkGreen text-white;
+}
+
+/* radio checked style */
+input[type="radio"].transactiongroup:checked + div span.radio {
+  @apply opacity-100 border-[6px] border-darkGreen;
+}
+
+input[type="radio"].transactiongroup:checked ~ .transactionoption {
+  @apply border-darkGreen;
+}
+
+/* rightInContent */
+.rightInContent {
+  @apply py-6 md:py-12 overflow-y-auto h-[calc(100vh-98px)] xl:h-[calc(100vh-106px)] scroll-smooth;
+}
+
+.card span {
+  @apply text-[#64748B] text-sm font-bold;
+}
+.card .pi-sort-alt:before {
+  @apply text-[#64748B] text-10;
+}
+
+/* Datable Pagination  */
+.p-paginator .p-paginator-pages .p-paginator-page {
+  min-width: 30px !important;
+  height: 28px !important;
+  border-radius: 5px !important;
+}
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background-color: #8fb50b !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.p-paginator .p-paginator-pages .p-paginator-page {
+  color: #1e293b !important;
+}
+.p-paginator .p-paginator-pages .p-paginator-page:hover {
+  background-color: #8fb50b !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+.paymentpop .p-inputtext {
+  background-color: #fff !important;
+}
+.paymentpop .p-dropdown {
+  background-color: #fff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+}
+.p-dropdown,
+.p-calendar {
+  background-color: #f8fafc !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+}
+.p-calendar.due {
+  border: 1px solid #e2e8f0 !important;
+}
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight,
+.p-calendar .p-component .p-inputwrapper {
+  color: #fff !important;
+  background-color: #8fb50b !important;
+}
+.box-shadow {
+  box-shadow: none !important;
+}
+.p-inputtext,
+.p-inputtext:focus {
+  background-color: #f8fafc !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+.dataTables .p-inputtext {
+  background-color: #fff !important;
+  box-shadow: none !important;
+  /* border: 0 !important; */
+  border: 2px solid #eee !important;
+}
+
+.dataTables .p-button {
+  background-color: #8fb50b !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.p-datatable .p-datatable-header {
+  background: #fff !important ;
+  border: 0 !important;
+  padding: 0 !important;
+  margin-bottom: 10px;
+}
+.p-paginator .p-paginator-next:not(.p-disabled):not(.p-highlight):hover,
+.p-paginator .p-paginator-prev:not(.p-disabled):not(.p-highlight):hover,
+.p-paginator .p-paginator-last:not(.p-disabled):not(.p-highlight):hover,
+.p-paginator .p-paginator-first:not(.p-disabled):not(.p-highlight):hover {
+  background-color: rgba(143, 181, 11, 0.2) !important;
+  border: transparent !important;
+  color: #1e293b !important ;
+  box-shadow: 0 !important;
+}
+
+.p-paginator .p-link:focus,
+.p-paginator .p-link:focus,
+.p-paginator .p-link:focus,
+.p-paginator .p-link:focus {
+  box-shadow: none !important;
+}
+
+.p-datatable.p-datatable-selectable .p-datatable-tbody > tr.p-selectable-row:focus {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+}
+
+/* input Button Type Number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+/* .card table tr{ @apply my-5 block py-5}
+.card table tr td:first-child{ @apply bg-darkGreen rounded-tl-2xl rounded-bl-2xl} */
+a.SideLink.active svg path {
+  fill: #fff;
+}
+.search_field {
+  border: 2px solid #eee !important;
+  padding-right: 8px;
+}
+
+.search_field .search_input {
+  border: none !important;
+}
+@tailwind utilities;
+
