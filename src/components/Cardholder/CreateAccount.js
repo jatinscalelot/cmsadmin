@@ -52,18 +52,50 @@ function CreateAccount() {
 		cheque: null,
 	}
 	const validationSchema = Yup.object().shape({
-		fname: Yup.string().required("Firstname  is require !"),
-		lname: Yup.string().required("Lastname  is require !"),
-		email: Yup.string().required("Email  is require !"),
-		mobile: Yup.string().required("Mobile  is require !"),
-		password: Yup.string().required("Password is require !"),
+		fname: Yup.string().max(40).required("Firstname  is require !"),
+		lname: Yup.string().max(40).required("Lastname  is require !"),
+		email: Yup.string().email('Must be a valid email').max(255).required("Email  is require !"),
+		mobile: Yup.string().min(10, 'Mobile must be 10 characters long').required("Mobile  is require !"),
+		password: Yup.string().min(8, 'Password must be 8 characters long').required("Password is require !"),
 		commission: Yup.string().required("Commission is require !"),
-		profile_photo: Yup.mixed().required(""),
-		aadhar_card_front: Yup.mixed().required(),
-		aadhar_card_back: Yup.mixed().required(),
-		pan_card: Yup.mixed().required(),
-		cheque: Yup.mixed().required(),
+		profile_photo: Yup.mixed().test('fileFormat', 'Only file with jpg, png, jpeg extension support!', value => {
+			if (value) {
+				const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+				return supportedFormats.includes(value.type);
+			}
+			return false;
+		}).required("Upload Profile image"),
+		aadhar_card_front: Yup.mixed().test('fileFormat', 'Only file with jpg, png, jpeg extension support!', value => {
+			if (value) {
+				const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+				return supportedFormats.includes(value.type);
+			}
+			return false;
+		}).required("Upload Adhar Front image"),
+		aadhar_card_back: Yup.mixed().test('fileFormat', 'Only file with jpg, png, jpeg extension support!', value => {
+			if (value) {
+				const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+				return supportedFormats.includes(value.type);
+			}
+			return false;
+		}).required("Upload Adhar Back image"),
+		pan_card: Yup.mixed().test('fileFormat', 'Only file with jpg, png, jpeg extension support!', value => {
+			if (value) {
+				const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+				return supportedFormats.includes(value.type);
+			}
+			return false;
+		}).required("Upload Pancard image"),
+		cheque: Yup.mixed().test('fileFormat', 'Only file with jpg, png, jpeg extension support!', value => {
+			if (value) {
+				const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+				return supportedFormats.includes(value.type);
+			}
+			return false;
+		}).required("Upload Cheque image"),
 	})
+
+
 
 	const onSubmit = async (values) => {
 

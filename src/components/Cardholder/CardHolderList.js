@@ -22,16 +22,39 @@ import { useDispatch } from 'react-redux';
 import { disApproveUser, getAllUser } from './UserSlice';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/captions.css";
+import Download from "yet-another-react-lightbox/plugins/download";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Share from "yet-another-react-lightbox/plugins/share";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import FsLightbox from 'fslightbox-react';
 import { toast } from 'sonner';
 import { InputSwitch } from 'primereact/inputswitch';
 import ApproveCommisionPopup from '../Admin/Popup/ApproveCommisionPopup';
+import LoadingBar from 'react-top-loading-bar';
 
 function CardHolderList() {
 	// const [products, setProducts] = useState([]);
 	// const [multiSortMeta, setMultiSortMeta] = useState([{ field: 'category', order: -1 }]);
 	// const productService = new ProductService();
 	// const [users, setUsers] = useState([]);
+
+
+	const captionsRef = React.useRef(null);
+	const fullscreenRef = React.useRef(null);
+	const zoomRef = React.useRef(null);
+	const [progress, setProgress] = useState(0)
+
+
+
+
+
+
+
+
+
+
+
 	const [checked, setChecked] = useState()
 	const [open, setOpen] = React.useState(false);
 	const [totalCardHolders, setTotalCardHolders] = useState(0);
@@ -50,7 +73,6 @@ function CardHolderList() {
 	// const user = localStorage.getItem("user");
 	const navigate = useNavigate();
 	const [userList, setUserList] = useState([])
-	const zoomRef = useRef(null);
 
 	const getUserList = async () => {
 
@@ -60,12 +82,14 @@ function CardHolderList() {
 			search: searchUser
 		}
 		setLoading(false)
+		setProgress(20)
 
 		const response = await dispatch(getAllUser(payload))
 		if (response?.payload?.data?.IsSuccess) {
 			setUserList(response?.payload?.data?.Data?.docs)
 		}
 		setLoading(false)
+		setProgress(100)
 	}
 	useEffect(() => {
 		getUserList()
@@ -265,6 +289,7 @@ function CardHolderList() {
 
 	return (
 		<div>
+			<LoadingBar color="#f11946" progress={progress} shadow={true} onLoaderFinished={() => setProgress(0)} />
 			<div className="wrapper min-h-full">
 				<div className="relative flex flex-wrap items-center- justify-start md:mb-[50px]">
 					<div className="w-full md:w-1/2 xl:w-1/4 p-3 2xl:px-5">
@@ -356,13 +381,25 @@ function CardHolderList() {
 			{/* <Modal isOpen={isPhotoViewPopUpOpen}>
 				<SinglePhotoView handleClose={setIsPhotoViewPopUpOpen} imagePreview={imagePreview} id={id} />
 			</Modal> */}
+
 			<Lightbox
 				open={open}
+				plugins={[Download, Fullscreen, Share, Zoom]}
+				captions={{ ref: captionsRef }}
 				close={() => setOpen(false)}
 				zoom={{ ref: zoomRef }}
 				slides={[
-					{ src: `${baseImageUrl}/${imagePreview}` },
+					{
+						src: `${baseImageUrl}/${imagePreview}`,
+						download: `${baseImageUrl}/${imagePreview}?download`,
+						share: { url: `${baseImageUrl}/${imagePreview}`, title: "Image title" }
+					},
 				]}
+				fullscreen={{ ref: fullscreenRef }}
+				on={{
+					click: () => fullscreenRef.current?.enter(),
+				}}
+
 			/>
 
 		</div >

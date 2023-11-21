@@ -7,7 +7,8 @@ import { createUserServices, getAllUserServices } from "../auth/services/UserSer
 import { addCardServices, getCardServes, getSingleCardServices, updateCardServices, updatecardDueDateServices } from "../../redux/Services/cardServices";
 
 const initialState = {
-    // allusers: [],
+    cardList: [],
+    singleCard: {},
     isError: false,
     isError: false
 };
@@ -49,6 +50,13 @@ const cardSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+        builder.addCase(getCardList.fulfilled, (state, action) => {
+            state.cardList = action?.payload?.data?.Data?.docs
+        });
+        builder.addCase(getSingleCard.fulfilled, (state, action) => {
+            state.singleCard = action?.payload?.data?.Data
+            console.log('action?.payload?.data?.Data', action?.payload?.data?.Data)
+        });
         // builder.addCase(createUserProfile.fulfilled, (state, action) => {
         //     // let user = action?.payload?.data?.Data;
         //     // state.user = user ? user : {};
@@ -61,6 +69,18 @@ const cardSlice = createSlice({
     },
 });
 export default cardSlice.reducer;
+
+
+export const selectCards = (state) => state.card.cardList
+export const selectSingleCard = (state) => state.card.singleCard
+export const useCardList = () => {
+    const allcardLst = useSelector(selectCards);
+    return useMemo(() => allcardLst, [allcardLst]);
+};
+export const useSingleCard = () => {
+    const singleCardDetail = useSelector(selectSingleCard);
+    return useMemo(() => singleCardDetail, [singleCardDetail]);
+};
 
 // export const selectEvent = (state) => state.eventPersonalDetails.;
 

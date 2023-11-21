@@ -2,14 +2,35 @@ import axios from 'axios';
 import moment from 'moment/moment';
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { baseurl } from '../../api/baseurl';
+import { baseImageUrl, baseurl } from '../../api/baseurl';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { toast } from 'react-toastify';
 import Modal from '../../common/Modals/Modal';
 import SinglePhotoView from '../Admin/Popup/SinglePhotoView';
 import PaymentDetails from '../Admin/Popup/DepositPaymentDetails';
 import CardHolderDueAmount from '../Admin/Popup/CardHolderDueAmount'
+import { getSingleCard, useSingleCard } from './CardSlice';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/captions.css";
+import Download from "yet-another-react-lightbox/plugins/download";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Share from "yet-another-react-lightbox/plugins/share";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 export default function CardDetails() {
+	const dispatch = useDispatch()
+	const singleCardDetail = useSingleCard()
+	const captionsRef = React.useRef(null);
+	const fullscreenRef = React.useRef(null);
+	const zoomRef = React.useRef(null);
+
+
+	console.log('singleCardDetail', singleCardDetail)
+
+
+
+
 	// const { state } = useLocation();
 	// const { data } = state;
 	const [data, setData] = useState({});
@@ -23,24 +44,24 @@ export default function CardDetails() {
 
 	const user_id = localStorage.getItem("user_id");
 	const card_id = localStorage.getItem("card_id");
+	console.log('card_id', card_id)
+	console.log('user_id', user_id)
 	const [loading, setLoading] = useState(false);
 	const [card, setCard] = useState([]);
 	const [dueData, setDueData] = useState({});
 
-	const user = localStorage.getItem("user");
-	const header = {
-		Authorization: `Bearer ${JSON.parse(user)?.token}`,
-	};
+
 	const getCardDetails = async () => {
+		debugger
 		try {
-			const response = await axios.get(`${baseurl}/api/cards/cards-list?card_id=${card_id}&user_id=${user_id}`, { headers: header });
-			if (response.data.IsSuccess) {
-				setCard(response.data.Data);
-				setData(response.data.Data);
-				setDueData(response.data.Data)
-				setLoading(false);
-			} else {
-				toast.error(response.data.Message);
+			const payload = {
+				userid: user_id,
+				cardid: card_id
+			}
+			const response = await dispatch(getSingleCard(payload))
+			console.log('response', response)
+			if (response?.paylaod?.data?.IsSuccess) {
+				toast.success(response?.paylaod?.data?.Message)
 			}
 		} catch (error) {
 			console.log(error);
@@ -90,7 +111,7 @@ export default function CardDetails() {
 							<div className="flex flex-wrap md:flex-nowrap justify-center items-center md:space-x-5">
 								<div className="w-full md:w-1/3 mb-3 md:mb-0">
 									<span className="text-base md:text-lg xl:text-xl font-semibold text-lightGray mb-3">Card holder name</span>
-									<h2 className="text-yankeesBlue font-bold">{data.card_holder_name}</h2>
+									<h2 className="text-yankeesBlue font-bold">{singleCardDetail.card_holder}</h2>
 								</div>
 								<div className="relative w-full md:w-1/3 mb-3 md:mb-0 select-none">
 									<div className='flex items-center mb-3 space-x-3'>
@@ -114,19 +135,19 @@ export default function CardDetails() {
 											}
 										</div>
 									</div>
-									<h2 className="text-yankeesBlue font-bold">{data?.card_number && data?.card_number !== "" ? <>{viewNumber ? data.card_number : `********${(data.card_number).toString().substr(-4)}`}</> : ""}</h2>
+									<h2 className="text-yankeesBlue font-bold">{singleCardDetail?.card_number && singleCardDetail?.card_number !== "" ? <>{viewNumber ? singleCardDetail?.card_number : `********${(singleCardDetail?.card_number).toString().substr(-4)}`}</> : ""}</h2>
 									{/* <h2 className="text-yankeesBlue font-bold">{data?.card_number && data?.card_number !== "" ? <>********{(data.card_number).toString().substr(-4)}</> : ""}</h2> */}
 								</div>
 								<div className="w-full md:w-1/3 mb-3 md:mb-0">
 									<span className="text-base md:text-lg xl:text-xl font-semibold text-lightGray mb-3">Bank name</span>
-									<h2 className="text-yankeesBlue font-bold">{data.card_bank_name}</h2>
+									<h2 className="text-yankeesBlue font-bold">{singleCardDetail?.bank_name}</h2>
 								</div>
 							</div>
 						</div>
 						<div className="relative flex flex-wrap items-center- justify-start -mx-3 md:mb-[50px]">
 							<div className="w-full md:w-1/2 xl:w-1/4 p-3 2xl:px-5">
 								<div className="bg-white border border-[#CBD5E1] py-7 px-7 2xl::px-11 rounded-xl h-full">
-									<h2 className="text-yankeesBlue mb-3">{data.card_network}</h2>
+									<h2 className="text-yankeesBlue mb-3">{singleCardDetail?.card_type}</h2>
 									<span className="text-[#64748B]  text-2xl:text-base xl font-semibold">
 										Card Network
 									</span>
@@ -134,7 +155,7 @@ export default function CardDetails() {
 							</div>
 							<div className="w-full md:w-1/2 xl:w-1/4 p-3 2xl:px-5">
 								<div className="bg-white border border-[#CBD5E1] py-7 px-7 2xl::px-11 rounded-xl h-full">
-									<h2 className="text-yankeesBlue mb-3">{moment(data.card_exp_date).format('ll')}</h2>
+									<h2 className="text-yankeesBlue mb-3">{moment(singleCardDetail?.timestamp).format('ll')}</h2>
 									<span className="text-[#64748B]  text-2xl:text-base xl font-semibold">
 										Card Expiry Date
 									</span>
@@ -142,7 +163,7 @@ export default function CardDetails() {
 							</div>
 							<div className="w-full md:w-1/2 xl:w-1/4 p-3 2xl:px-5">
 								<div className="bg-white border border-[#CBD5E1] py-7 px-7 2xl::px-11 rounded-xl h-full">
-									<h2 className="text-yankeesBlue mb-3">{data.card_cvv}</h2>
+									<h2 className="text-yankeesBlue mb-3">{singleCardDetail.cvv}</h2>
 									<span className="text-[#64748B]  text-2xl:text-base xl font-semibold">
 										Card CVV
 									</span>
@@ -150,7 +171,7 @@ export default function CardDetails() {
 							</div>
 							<div className="w-full md:w-1/2 xl:w-1/4 p-3 2xl:px-5">
 								<div className="bg-white border border-[#CBD5E1] py-7 px-7 2xl::px-11 rounded-xl h-full">
-									<h2 className="text-yankeesBlue mb-3">{data.card_category}</h2>
+									<h2 className="text-yankeesBlue mb-3">{singleCardDetail.purpose}</h2>
 									<span className="text-[#64748B]  text-2xl:text-base xl font-semibold">
 										Card Category
 									</span>
@@ -161,9 +182,31 @@ export default function CardDetails() {
 							
 						</div> */}
 					</div>
-					<Modal isOpen={isPhotoViewPopUpOpen}>
+					<Lightbox
+						open={isPhotoViewPopUpOpen}
+						plugins={[Download, Fullscreen, Share, Zoom]}
+						captions={{ ref: captionsRef }}
+						close={() => setIsPhotoViewPopUpOpen(false)}
+						zoom={{ ref: zoomRef }}
+						slides={[
+							{
+								src: `${baseImageUrl}/${singleCardDetail.card_photo_front}`,
+								share: { url: `${baseImageUrl}/${singleCardDetail.card_photo_front}`, title: "Image title" }
+							},
+							{
+								src: `${baseImageUrl}/${singleCardDetail.card_photo_back}`,
+								share: { url: `${baseImageUrl}/${singleCardDetail.card_photo_back}`, title: "Image title" }
+							},
+						]}
+						fullscreen={{ ref: fullscreenRef }}
+						on={{
+							click: () => fullscreenRef.current?.enter(),
+						}}
+
+					/>
+					{/* <Modal isOpen={isPhotoViewPopUpOpen}>
 						<SinglePhotoView handleClose={setIsPhotoViewPopUpOpen} id2={id2} />
-					</Modal>
+					</Modal> */}
 					<Modal isOpen={isPayPopUpOpen}>
 						<PaymentDetails handleClose={setIsPayPopUpOpen} payerData={card} />
 					</Modal>
