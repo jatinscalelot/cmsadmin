@@ -64,7 +64,7 @@ function EditUser() {
     })
 
     const onSubmit = async (values) => {
-        console.log('values', values)
+
         const payload = new FormData();
         for (const key in values) {
             payload.append(key, values[key]);
@@ -74,7 +74,7 @@ function EditUser() {
             toast.success(response?.data?.Message)
             navigate("../")
         }
-        console.log('response', response)
+      
     }
 
     // const ValidationSchema = Yup.object().shape({
@@ -151,8 +151,7 @@ function EditUser() {
                 onSubmit={onSubmit}
             >
                 {({ formik, setFieldValue, values }) => {
-                    console.log('values', values)
-
+           
                     return (
                         <>
                             <Form className='pt-7' >

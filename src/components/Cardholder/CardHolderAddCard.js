@@ -36,15 +36,27 @@ export default function CardHolderAddCard() {
   }
 
   const validationSchema = Yup.object().shape({
-    card_photo_front: Yup.string().required("Photo Require !"),
-    card_photo_back: Yup.string().required("Photo Require !"),
+    card_photo_front: Yup.mixed().test('fileFormat', 'Only file with jpg, png, jpeg extension support!', value => {
+      if (value) {
+        const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+        return supportedFormats.includes(value.type);
+      }
+      return false;
+    }).required("Photo Require !"),
+    card_photo_back: Yup.mixed().test('fileFormat', 'Only file with jpg, png, jpeg extension support!', value => {
+      if (value) {
+        const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+        return supportedFormats.includes(value.type);
+      }
+      return false;
+    }).required("Photo Require !"),
     card_holder: Yup.string().required("Card HolderName is Require"),
     bank_name: Yup.string().required("Bank name is Require"),
     purpose: Yup.string().required("Purpose  is Require"),
     card_type: Yup.string().required("Card Type  is Require"),
     card_number: Yup.string().required("Card Number  is Require"),
     expiry_date: Yup.string().required("Expire Date  is Require"),
-    cvv: Yup.string().required("Cvv  is Require"),
+    cvv: Yup.string().min(3, "Minimum 3 Digite Require").required("Cvv  is Require"),
     total_limit: Yup.string().required("Total Limit  is Require")
   })
 
@@ -353,13 +365,13 @@ export default function CardHolderAddCard() {
                           {/* <Field
                           required type="date" name="card_exp_date" className="input_box2 placeholder:text-[#94A3B8] placeholder:text-sm md:placeholder:text-xl" placeholder='Enter card expiry date' required onChange={(e) => setInputValue("card_exp_date", e.target.value)} /> */}
                           {/* <Calendar
-                            name="expiry_date"
+                            name="expiry_date"s
                             className="w-full py-[2px] box-shadow"
                             dateFormat="yy-mm"
                             value={new Date()}
                             onChange={(e) => { console.log(e.target.value) }}
                           /> */}
-                          <Calendar className="w-full py-[2px] box-shadow" placeholder="Enter Date" onChange={(e) => setFieldValue("expiry_date", (moment(e.value).format('MMM YYYY')))} view="month" dateFormat="mm/yy" />
+                          <Calendar className="w-full py-[2px] box-shadow" placeholder="Enter Date" onChange={(e) => setFieldValue("expiry_date", (moment(e.value).format('MMM YYYY')))} view="month" dateFormat="mm/yy" minDate={moment().startOf('month').toDate()} />
                           <small className="text-red-500 text-base ">
                             {/* {formik.errors.card_exp_date} */}
                             <ErrorMessage name="expiry_date" />

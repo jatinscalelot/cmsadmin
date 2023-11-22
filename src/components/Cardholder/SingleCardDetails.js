@@ -10,20 +10,25 @@ import DemoImage from "../../assets/images/profile.png";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import PaymentDetails from '../Admin/Popup/DepositPaymentDetails';
-import { getSingleCard } from '../Cards/CardSlice';
+import { getSingleCard, useSingleCard } from '../Cards/CardSlice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import LoadingBar from 'react-top-loading-bar';
+
 
 export default function SingleCardDetails() {
+
+	const singleCardDetail = useSingleCard()
+	const [progress, setProgress] = useState(0)
 
 
 	const dispatch = useDispatch()
 	const user_id = localStorage.getItem("useridForcard");
 	const card_id = localStorage.getItem("card_id");
 	const [requestDetails, setRequestDetails] = useState([]);
-	const [singleCardDetail, setSingleCardDetail] = useState({})
+	// const [singleCardDetail, setSingleCardDetail] = useState({})
 	const [open, setOpen] = useState(false)
 
 
@@ -67,14 +72,16 @@ export default function SingleCardDetails() {
 			cardid: card_id
 		}
 		try {
+			setProgress(70)
 			const response = await dispatch(getSingleCard(payload))
 			if (response?.payload?.data?.IsSuccess) {
-				setSingleCardDetail({ ...response?.payload?.data?.Data })
+				// setSingleCardDetail({ ...response?.payload?.data?.Data })
 				toast.success(response?.payload?.data?.Message)
 			}
 		} catch (error) {
 			console.log(error);
 		}
+		setProgress(100)
 	};
 	useEffect(() => {
 		// getRequestDeails();
@@ -157,6 +164,7 @@ export default function SingleCardDetails() {
 
 	return (
 		<>
+			<LoadingBar color="#f11946" progress={progress} shadow={true} onLoaderFinished={() => setProgress(0)} />
 			{loading ? (
 				<div className="flex items-center justify-center">
 					<ProgressSpinner
@@ -257,6 +265,16 @@ export default function SingleCardDetails() {
 									</h2>
 									<span className="text-[#64748B] text-base 2xl:text-xl font-semibold">
 										Total Due Amount
+									</span>
+								</div>
+							</div>
+							<div className="w-full md:w-1/2 xl:w-1/4 p-3 2xl:px-5">
+								<div className="bg-[#ed4d3714] border border-transparent py-7 px-7 2xl::px-11 rounded-xl h-full">
+									<h2 className="text-[#ED4D37] mb-3">
+										<i className="pi pi-calendar" style={{ fontSize: '2rem' }}></i>	{moment(singleCardDetail?.due_date_timestamp).format("MMM Do YY")}
+									</h2>
+									<span className="text-[#64748B] text-base 2xl:text-xl font-semibold">
+										Due Date
 									</span>
 								</div>
 							</div>

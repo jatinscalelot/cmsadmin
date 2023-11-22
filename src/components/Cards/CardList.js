@@ -25,7 +25,6 @@ import LoadingBar from 'react-top-loading-bar';
 
 export default function CardList() {
     const cardList = useCardList()
-    console.log('cardList', cardList)
     const [progress, setProgress] = useState(0)
 
 
@@ -302,7 +301,7 @@ export default function CardList() {
                                             globalFilterFields={['card_holder_name', 'card_number', 'card_bank_name']}
                                             // header={headerf}
                                             // onSelectionChange={(col) => { localStorage.setItem("card_id", col.value.card_id); navigate("../cards/carddetails") }}
-                                            onSelectionChange={(col) => { localStorage.setItem("card_id", col.value.id); console.log(' col.value', col.value); localStorage.setItem("user_id", col.value.createdBy); navigate("../cards/carddetails") }}
+                                            onSelectionChange={(col) => { localStorage.setItem("card_id", col.value.id); localStorage.setItem("user_id", col.value.createdBy); navigate("../cards/carddetails") }}
                                             paginator
                                             rows={8}
                                         >

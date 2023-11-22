@@ -19,6 +19,7 @@ export default function CardHolderEditCard() {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
+    const [expDate, setExpDate] = useState(``)
     const [loading1, setLoading1] = useState(false);
     const [singleCardDetail, setSingleCardDetail] = useState({})
     const [data, setData] = useState({});
@@ -40,8 +41,31 @@ export default function CardHolderEditCard() {
         total_limit: ""
     }
     const validationSchema = Yup.object().shape({
-        card_photo_front: Yup.string().required(),
-        card_photo_back: Yup.string().required(),
+        card_photo_front: Yup.mixed().test('string', 'Only file with jpg, png, jpeg extension support!', value => {
+  
+            if (typeof (value) == "object") {
+                const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+                return supportedFormats.includes(value.type);
+            } else if (typeof (value) == "string") {
+                const supportedFormats = ['jpeg', 'jpg', 'png'];
+                const ext = value.split(".")[1]
+  
+                return supportedFormats.includes(ext)
+            }
+            return false;
+        }).required("Photo Require !"),
+        card_photo_back: Yup.mixed().test('fileFormat', 'Only file with jpg, png, jpeg extension support!', value => {
+            if (typeof (value) == "object") {
+                const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+                return supportedFormats.includes(value.type);
+            } else if (typeof (value) == "string") {
+                const supportedFormats = ['jpeg', 'jpg', 'png'];
+                const ext = value.split(".")[1]
+       
+                return supportedFormats.includes(ext)
+            }
+            return false;
+        }).required("Photo Require !"),
         card_holder: Yup.string().required(),
         bank_name: Yup.string().required(),
         purpose: Yup.string().required(),
@@ -62,6 +86,7 @@ export default function CardHolderEditCard() {
         payload.append("cardid", card_id)
 
         try {
+            setLoading(true)
             const response = await dispatch(updateCard(payload)).unwrap()
 
             if (response?.data?.IsSuccess) {
@@ -71,6 +96,7 @@ export default function CardHolderEditCard() {
         } catch (error) {
             console.log('error', error)
         }
+        setLoading(false)
     }
 
     // const ValidationSchema = Yup.object().shape({
@@ -180,16 +206,18 @@ export default function CardHolderEditCard() {
             if (response?.payload?.data?.IsSuccess) {
 
                 const fillData = response?.payload?.data?.Data
+                setExpDate(fillData?.expiry_date)
+      
 
                 const savedValues = {
-                    card_photo_front: null,
-                    card_photo_back: null,
+                    card_photo_front: fillData?.card_photo_front,
+                    card_photo_back: fillData?.card_photo_back,
                     card_holder: fillData?.card_holder,
                     bank_name: fillData?.bank_name,
                     purpose: fillData?.purpose,
                     card_type: fillData?.card_type,
                     card_number: fillData?.card_number,
-                    expiry_date: "",
+                    expiry_date: fillData?.expiry_date,
                     cvv: fillData?.cvv,
                     total_limit: fillData?.total_limit
                 }
@@ -229,9 +257,8 @@ export default function CardHolderEditCard() {
                     >
                         {
                             ({ formik, setFieldValue, values, errors }) => {
-                                console.log('values', values)
-                                console.log('errors', errors)
-                                console.log('typeof(', typeof (values?.card_photo_front))
+                       
+
                                 return (
                                     <>
                                         <Form>
@@ -373,7 +400,8 @@ export default function CardHolderEditCard() {
                             value={new Date()}
                             onChange={(e) => { console.log(e.target.value) }}
                           /> */}
-                                                        <Calendar className="w-full py-[2px] box-shadow" value={values.expiry_date} onChange={(e) => setFieldValue("expiry_date", (moment(e.value).format('MMM YYYY')))} view="month" dateFormat="mm/yy" />
+                                                        <Calendar className="w-full py-[2px] box-shadow" readOnlyInput placeholder={expDate} onChange={(e) => setFieldValue("expiry_date", (moment(e.value).format('MMM YYYY')))} view="month" dateFormat="mm/yy" minDate={moment().startOf('month').toDate()}
+ />
                                                         <small className="text-red-500 text-base">
                                                             {/* {formik.errors.card_exp_date} */}
                                                             <ErrorMessage name="expiry_date" />

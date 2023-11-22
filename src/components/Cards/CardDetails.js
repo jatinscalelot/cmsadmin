@@ -25,12 +25,6 @@ export default function CardDetails() {
 	const fullscreenRef = React.useRef(null);
 	const zoomRef = React.useRef(null);
 
-
-	console.log('singleCardDetail', singleCardDetail)
-
-
-
-
 	// const { state } = useLocation();
 	// const { data } = state;
 	const [data, setData] = useState({});
@@ -44,22 +38,19 @@ export default function CardDetails() {
 
 	const user_id = localStorage.getItem("user_id");
 	const card_id = localStorage.getItem("card_id");
-	console.log('card_id', card_id)
-	console.log('user_id', user_id)
 	const [loading, setLoading] = useState(false);
 	const [card, setCard] = useState([]);
 	const [dueData, setDueData] = useState({});
 
 
 	const getCardDetails = async () => {
-		debugger
 		try {
 			const payload = {
 				userid: user_id,
 				cardid: card_id
 			}
 			const response = await dispatch(getSingleCard(payload))
-			console.log('response', response)
+	
 			if (response?.paylaod?.data?.IsSuccess) {
 				toast.success(response?.paylaod?.data?.Message)
 			}

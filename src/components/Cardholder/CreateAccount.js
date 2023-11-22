@@ -51,10 +51,11 @@ function CreateAccount() {
 		pan_card: null,
 		cheque: null,
 	}
+	const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 	const validationSchema = Yup.object().shape({
 		fname: Yup.string().max(40).required("Firstname  is require !"),
 		lname: Yup.string().max(40).required("Lastname  is require !"),
-		email: Yup.string().email('Must be a valid email').max(255).required("Email  is require !"),
+		email: Yup.string().matches(emailRegex, "invalid Email").max(255).required("Email  is require !"),
 		mobile: Yup.string().min(10, 'Mobile must be 10 characters long').required("Mobile  is require !"),
 		password: Yup.string().min(8, 'Password must be 8 characters long').required("Password is require !"),
 		commission: Yup.string().required("Commission is require !"),
@@ -99,12 +100,12 @@ function CreateAccount() {
 
 	const onSubmit = async (values) => {
 
-		console.log('values', values)
+	
 		const payload = new FormData();
 		for (const key in values) {
 			payload.append(key, values[key]);
 		}
-		console.log('payload', payload)
+
 		setLoading(true)
 		try {
 			const response = await dispatch(createUserProfile(payload)).unwrap()
@@ -113,7 +114,7 @@ function CreateAccount() {
 				toast.success(response?.data?.Message)
 				navigate("../")
 			}
-			console.log('response', response)
+		
 		} catch (error) {
 			console.log('error', error)
 		}
@@ -194,7 +195,7 @@ function CreateAccount() {
 				onSubmit={onSubmit}
 			>
 				{({ formik, setFieldValue, values }) => {
-					console.log('values', values)
+				
 
 					return (
 						<>
