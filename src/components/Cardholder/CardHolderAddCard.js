@@ -241,7 +241,7 @@ export default function CardHolderAddCard() {
                             Card Number*
                           </label>
                           <Field
-                            required
+                            
                             maxLength={16}
                             type="text"
                             name="card_number"
@@ -257,7 +257,7 @@ export default function CardHolderAddCard() {
                             Purpose*
                           </label>
                           <Field
-                          required
+                          
                             maxLength={16}
                             type="text"
                             name="purpose"
@@ -277,7 +277,7 @@ export default function CardHolderAddCard() {
                               htmlFor="business"
                             >
                               <Field
-                                required
+                                
                                 type="radio"
                                 name="purpose"
                                 id="business"
@@ -297,7 +297,7 @@ export default function CardHolderAddCard() {
                               htmlFor="personal"
                             >
                               <Field
-                                required
+                                
                                 type="radio"
                                 name="purpose"
                                 id="purpose"
@@ -324,7 +324,7 @@ export default function CardHolderAddCard() {
                             Card bank name*
                           </label>
                           <Field
-                            required
+                            
                             type="text"
                             name="bank_name"
                             className="input_box2 placeholder:text-[#94A3B8] placeholder:text-sm md:placeholder:text-xl"
@@ -341,7 +341,7 @@ export default function CardHolderAddCard() {
                             Card holder name*
                           </label>
                           <Field
-                            required
+                            
                             type="text"
                             name="card_holder"
                             className="input_box2 placeholder:text-[#94A3B8] placeholder:text-sm md:placeholder:text-xl"
@@ -363,7 +363,7 @@ export default function CardHolderAddCard() {
                             Card Expiry Date *
                           </label>
                           {/* <Field
-                          required type="date" name="card_exp_date" className="input_box2 placeholder:text-[#94A3B8] placeholder:text-sm md:placeholder:text-xl" placeholder='Enter card expiry date' required onChange={(e) => setInputValue("card_exp_date", e.target.value)} /> */}
+                           type="date" name="card_exp_date" className="input_box2 placeholder:text-[#94A3B8] placeholder:text-sm md:placeholder:text-xl" placeholder='Enter card expiry date' required onChange={(e) => setInputValue("card_exp_date", e.target.value)} /> */}
                           {/* <Calendar
                             name="expiry_date"s
                             className="w-full py-[2px] box-shadow"
@@ -383,7 +383,7 @@ export default function CardHolderAddCard() {
                             Card Type*
                           </label>
                           <Field
-                            required
+                            
                             type="text"
                             name="card_type"
                             className="input_box2 placeholder:text-[#94A3B8] placeholder:text-sm md:placeholder:text-xl"
@@ -517,7 +517,7 @@ export default function CardHolderAddCard() {
                             Card CVV *
                           </label>
                           <Field
-                            required
+                            
                             maxLength={3}
                             type="text"
                             name="cvv"
@@ -534,7 +534,7 @@ export default function CardHolderAddCard() {
                             Total Limit *
                           </label>
                           <Field
-                            required
+                            
                             // step="any"
                             type="text"
                             name="total_limit"

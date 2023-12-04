@@ -320,7 +320,7 @@ function SideBar() {
                   <img src={Notification} alt="Notification Icon" />
                 </button>
                 {/* Notification Box  */}
-                <div className="absolute right-0 top-10 w-full min-w-[482px] bg-white rounded-2xl p-6 shadow-shadowbox invisible group-hover:visible opacity-0 group-hover:opacity-100 translate-y-16 group-hover:translate-y-0 z-40 anim">
+                <div className="absolute right-0 top-10 w-full min-w-[482px] min-h-[350px] h-full overflow-y-auto bg-white rounded-2xl p-6 shadow-shadowbox invisible group-hover:visible opacity-0 group-hover:opacity-100 translate-y-16 group-hover:translate-y-0 z-40 anim">
                   <h6 className="text-[#1F2937] text-lg font-bold leading-8 border-b-2 border-[#CBD5E1] pb-2">
                     Notifications
                   </h6>
